@@ -2,8 +2,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import { INITIAL_PRODUCTS, BTC_FIXED_AMOUNT } from '../lib/constants';
-import { ScarcityVisualizer } from '../components/ScarcityVisualizer';
+import { INITIAL_PRODUCTS, BTC_FIXED_AMOUNT } from '@/lib/constants';
+import { ScarcityVisualizer } from '@/components/ScarcityVisualizer';
 import { ArrowRight, QrCode, CreditCard } from 'lucide-react';
 
 export default function ServicesPage() {
@@ -17,13 +17,13 @@ export default function ServicesPage() {
   return (
     <section className="px-4 sm:px-12 pt-32 pb-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 max-w-7xl mx-auto">
-        
+
         {/* Product Media Column */}
         <div className="space-y-8">
           <div className="relative aspect-square bg-black border border-white/10 group overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-[2px] bg-brc-green z-20 animate-scan"></div>
-            <img 
-              src={selectedProduct.imageUrl} 
+            <img
+              src={selectedProduct.imageUrl}
               alt={selectedProduct.nomenclature}
               className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
             />
@@ -60,16 +60,15 @@ export default function ServicesPage() {
               <span className="font-mono text-sm opacity-30">≈ $94.21 REF</span>
             </div>
 
-            <button 
+            <button
               onClick={handlePurchase}
               disabled={selectedProduct.status === 'ARCHIVED'}
-              className={`w-full py-8 border font-mono text-[14px] tracking-[0.4em] uppercase transition-all flex items-center justify-center gap-4 ${
-                selectedProduct.status === 'ARCHIVED' 
+              className={`w-full py-8 border font-mono text-[14px] tracking-[0.4em] uppercase transition-all flex items-center justify-center gap-4 ${selectedProduct.status === 'ARCHIVED'
                 ? 'border-white/10 text-white/20 cursor-not-allowed'
                 : 'border-brc-green text-brc-green hover:bg-brc-green hover:text-black'
-              }`}
+                }`}
             >
-              {selectedProduct.status === 'ARCHIVED' ? 'FULLY_ARCHIVED' : 'ACQUIRE_UNIT [+]'} 
+              {selectedProduct.status === 'ARCHIVED' ? 'FULLY_ARCHIVED' : 'ACQUIRE_UNIT [+]'}
               <ArrowRight size={20} />
             </button>
           </div>
@@ -90,7 +89,7 @@ export default function ServicesPage() {
               <div className="p-4 bg-white">
                 <QrCode size={200} className="text-black" />
               </div>
-              
+
               <div className="text-center space-y-2">
                 <p className="font-mono text-[10px] opacity-40 uppercase">Send Exactly</p>
                 <p className="font-mono text-3xl font-bold text-brc-green">{BTC_FIXED_AMOUNT} BTC</p>
@@ -101,7 +100,7 @@ export default function ServicesPage() {
               </div>
 
               <div className="grid grid-cols-2 gap-4 w-full">
-                <button 
+                <button
                   onClick={() => {
                     setPurchaseStep('VERIFYING');
                     setTimeout(() => setPurchaseStep('SUCCESS'), 3000);
@@ -110,7 +109,7 @@ export default function ServicesPage() {
                 >
                   <CreditCard size={14} className="inline mr-2" /> FIAT BRIDGE
                 </button>
-                <button 
+                <button
                   onClick={() => setPurchaseStep('IDLE')}
                   className="py-4 border border-white/20 font-mono text-[10px] uppercase tracking-widest hover:text-brc-rust"
                 >

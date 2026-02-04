@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { INITIAL_PRODUCTS } from '../lib/constants';
+import { INITIAL_PRODUCTS } from '@/lib/constants';
 
 export default function ProjectsPage() {
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
@@ -39,8 +39,8 @@ export default function ProjectsPage() {
             </thead>
             <tbody>
               {INITIAL_PRODUCTS.map((p) => (
-                <tr 
-                  key={p.id} 
+                <tr
+                  key={p.id}
                   className="border-b border-white/5 hover:bg-white/[0.02] transition-colors group cursor-pointer"
                   onMouseEnter={() => setHoveredProduct(p.id)}
                   onMouseLeave={() => setHoveredProduct(null)}
@@ -68,10 +68,10 @@ export default function ProjectsPage() {
           {INITIAL_PRODUCTS.map((p) => (
             <div key={p.id + '_grid'} className="space-y-4 group cursor-pointer">
               <div className="relative aspect-square border border-white/10 overflow-hidden">
-                <img 
-                  src={p.imageUrl} 
-                  alt={p.nomenclature} 
-                  className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110" 
+                <img
+                  src={p.imageUrl}
+                  alt={p.nomenclature}
+                  className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <span className="font-mono text-[9px] tracking-[0.3em] border border-white/50 px-4 py-2 bg-black uppercase">Inspect</span>

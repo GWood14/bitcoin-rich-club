@@ -1,0 +1,25 @@
+
+BRC_GLOBAL_ARCHIVE_ASSET_MANIFEST_V3.1
+--------------------------------------
+FONTS:
+- Playfair Display (Italic)
+- JetBrains Mono
+- Inter
+
+COLORS:
+- #050505 (Archival Black)
+- #00FF80 (System Green)
+- #B35D33 (Issued Rust)
+
+IMAGES:
+- obsidian-container.jpg (Ref: https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a)
+- timepiece.jpg (Ref: https://images.unsplash.com/photo-1614064641938-3bbee52942c7)
+- optics.jpg (Ref: https://images.unsplash.com/photo-1550751827-4bd374c3f58b)
+
+EFFECTS:
+- CRT Scanlines Overlay
+- 8s Animated Noise Grain
+- Truth Parallax Watermark
+- Forensic L-Brackets
+
+END OF MANIFEST

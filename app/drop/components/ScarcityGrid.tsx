@@ -2,57 +2,62 @@
 
 import React from "react";
 
-const TOTAL_UNITS = 21;
-const UNIT_PRICES = [95.0, 98.2, 101.3]; // mock data
+interface ScarcityGridProps {
+    totalUnits: number;
+    soldUnits: number;
+    price: string;
+}
 
-export function ScarcityGrid() {
-    // Generate 21 cells
-    const cells = Array.from({ length: TOTAL_UNITS }, (_, i) => {
-        // Mock logic: First 11 units issued, rest unissued
-        const isIssued = i < 11;
-        // Mock prices based on index for tooltip
-        // Cycle through mock prices
-        const price = UNIT_PRICES[i % UNIT_PRICES.length].toFixed(2);
+export function ScarcityGrid({ totalUnits, soldUnits, price }: ScarcityGridProps) {
+    // Generate cells based on totalUnits
+    const cells = Array.from({ length: totalUnits }, (_, i) => {
+        // Determine issuance based on soldUnits
+        const isIssued = i < soldUnits;
 
         return {
             id: i,
-            status: isIssued ? "issued" : "unissued", // "archived" logic could be added but prompt says "if all issued" for archived.
+            status: isIssued ? "issued" : "unissued",
             price
         };
     });
 
     return (
-        <div className="mt-12">
-            {/* 5.1 Grid */}
-            <div className="grid grid-cols-7 gap-2">
+        <div className="flex flex-col items-start gap-3 mt-4 w-full max-w-[320px]">
+            {/* Label */}
+            <div className="font-mono text-[9px] text-white/40 tracking-widest uppercase">
+                SCARCITY_VISUALIZER // {totalUnits}_UNITS
+            </div>
+
+            {/* Grid */}
+            <div className="grid grid-cols-7 gap-1 w-full">
                 {cells.map((cell) => (
                     <div
                         key={cell.id}
-                        className="group relative"
+                        className="group relative w-full aspect-[3/2]"
                     >
-                        {/* 5.2 Cell States */}
+                        {/* Cell State */}
                         <div
                             className={`
-                aspect-square w-full border transition-colors duration-300
-                ${cell.status === "issued"
-                                    ? "bg-brc-green border-brc-green"
-                                    : "bg-black border-white/10"
+                                w-full h-full border transition-all duration-300
+                                ${cell.status === "issued"
+                                    ? "bg-brc-green border-brc-green shadow-[0_0_10px_-2px_rgba(0,255,128,0.3)]"
+                                    : "bg-transparent border-white/10"
                                 }
-              `}
+                            `}
                         />
 
-                        {/* 5.3 Hover Tooltip (Issued Units) */}
+                        {/* Hover Tooltip (Issued Units) */}
                         {cell.status === "issued" && (
                             <div
                                 className="
-                  opacity-0 group-hover:opacity-100 transition-opacity duration-200
-                  absolute bottom-full left-1/2 -translate-x-1/2 mb-2
-                  bg-[#050505] border border-white/10 px-2 py-1
-                  whitespace-nowrap z-20 pointer-events-none
-                "
+                                    opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                                    absolute bottom-full left-1/2 -translate-x-1/2 mb-2
+                                    bg-[#050505] border border-white/10 px-2 py-1
+                                    whitespace-nowrap z-20 pointer-events-none
+                                "
                             >
                                 <span className="font-mono text-[9px] text-white">
-                                    ISSUED_AT: ${cell.price}
+                                    ISSUED_AT: {cell.price} BTC
                                 </span>
                             </div>
                         )}

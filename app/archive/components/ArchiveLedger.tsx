@@ -1,17 +1,18 @@
 "use client";
 
 import React from "react";
-import { ArchiveItem } from "./ArchiveData";
+import { DropRecord, UnitRecord } from "@/lib/types";
 
 interface ArchiveLedgerProps {
-    items: ArchiveItem[];
-    onItemClick: (item: ArchiveItem) => void;
+    drop: DropRecord;
+    units: UnitRecord[];
+    onUnitClick: (unit: UnitRecord) => void;
 }
 
-export function ArchiveLedger({ items, onItemClick }: ArchiveLedgerProps) {
+export function ArchiveLedger({ drop, units, onUnitClick }: ArchiveLedgerProps) {
     return (
-        <div className="w-full border border-white/10 bg-black/40 overflow-hidden flex flex-col max-h-[60vh]">
-            <div className="overflow-x-auto overflow-y-auto custom-scrollbar">
+        <div className="w-full border border-white/10 bg-black/40 overflow-hidden flex flex-col max-h-[560px]">
+            <div className="overflow-x-auto overflow-y-auto custom-scrollbar brc-scrollbar">
                 <table className="w-full font-mono text-left text-[10px] sm:text-xs">
                     <thead className="sticky top-0 z-10 bg-[#0A0A0A] shadow-lg">
                         <tr className="border-b border-white/10 text-white/40 uppercase tracking-widest h-10">
@@ -21,34 +22,41 @@ export function ArchiveLedger({ items, onItemClick }: ArchiveLedgerProps) {
                             <th className="px-4 font-normal whitespace-nowrap">ISSUANCE</th>
                             <th className="px-4 font-normal whitespace-nowrap">METHOD</th>
                             <th className="px-4 font-normal whitespace-nowrap text-right">STATUS</th>
+                            <th className="px-4 font-normal whitespace-nowrap text-right">ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {items.map((item) => (
+                        {units.map((unit) => (
                             <tr
-                                key={item.refId}
-                                onClick={() => onItemClick(item)}
+                                key={unit.unitId}
+                                onClick={() => onUnitClick(unit)}
                                 className="
-                h-[44px] border-b border-white/5 text-white/70 cursor-pointer
-                transition-colors duration-200
-                hover:bg-[rgba(0,255,128,0.05)] hover:text-[#00FF80]
-              "
+                                    h-[44px] border-b border-white/5 text-white/70 cursor-pointer
+                                    transition-colors duration-200
+                                    hover:bg-[rgba(0,255,128,0.05)] hover:text-[#00FF80] group
+                                "
                             >
-                                <td className="px-4 whitespace-nowrap">{item.refId}</td>
-                                <td className="px-4 whitespace-nowrap">{item.name}</td>
+                                <td className="px-4 whitespace-nowrap opacity-60">{drop.dropId}</td>
+                                <td className="px-4 whitespace-nowrap text-white group-hover:text-[#00FF80]">{drop.nomenclature}</td>
                                 <td className="px-4 whitespace-nowrap">
-                                    {item.serial.toString().padStart(2, "0")}
+                                    {unit.serial}
                                 </td>
-                                <td className="px-4 whitespace-nowrap">${item.fiatPrice.toFixed(2)}</td>
-                                <td className="px-4 whitespace-nowrap">{item.method}</td>
+                                <td className="px-4 whitespace-nowrap">
+                                    {unit.fiatRef ? `$${unit.fiatRef.toFixed(2)}` : '—'}
+                                </td>
+                                <td className="px-4 whitespace-nowrap">{unit.method}</td>
                                 <td className="px-4 whitespace-nowrap text-right">
                                     <span
                                         className={
-                                            item.status === "ISSUED" ? "text-brc-green" : "text-brc-rust"
+                                            unit.status === "ISSUED" ? "text-brc-green" :
+                                                unit.status === "ARCHIVED" ? "text-brc-rust" : "text-white/30"
                                         }
                                     >
-                                        {item.status}
+                                        {unit.status}
                                     </span>
+                                </td>
+                                <td className="px-4 whitespace-nowrap text-right text-brc-green opacity-0 group-hover:opacity-100 transition-opacity">
+                                    OPEN_DOSSIER [+]
                                 </td>
                             </tr>
                         ))}

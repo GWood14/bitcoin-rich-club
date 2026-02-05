@@ -134,12 +134,15 @@ export default function ManifestoPage() {
                 <div className="w-px h-32 bg-gradient-to-b from-transparent via-white/10 to-brc-green mb-12" />
 
                 {/* Final headline */}
-                <h1 className="font-display italic text-6xl sm:text-8xl text-white text-center mb-4">
-                    Time is the only luxury.
-                </h1>
-                <h1 className="font-display italic text-6xl sm:text-8xl text-white text-center opacity-20 mb-12">
-                    Time is the only luxury.
-                </h1>
+                {/* Final headline */}
+                <div className="flex flex-col items-center leading-none">
+                    <h1 className="font-display italic text-5xl sm:text-7xl text-white text-center z-10">
+                        Time is the
+                    </h1>
+                    <h1 className="font-display italic text-6xl sm:text-9xl text-transparent text-center [-webkit-text-stroke:1px_rgba(255,255,255,0.2)] select-none">
+                        only luxury.
+                    </h1>
+                </div>
 
                 {/* Ritual dates */}
                 <div className="font-mono text-[10px] tracking-[0.4em] text-white/20 hover:text-brc-green transition-colors cursor-default">

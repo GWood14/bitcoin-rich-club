@@ -1,48 +1,72 @@
-
-import { Product } from './types';
+import { DropRecord, UnitRecord } from './types';
 
 export const BTC_FIXED_AMOUNT = 0.001;
 export const HARD_LIMIT = 21;
 
-const generateUnits = (count: number, issued: number): any[] => {
-  return Array.from({ length: count }).map((_, i) => ({
-    id: `u-${i}`,
-    serial: `BRC-U-${String(i + 1).padStart(3, '0')}`,
-    status: i < issued ? 'ISSUED' : 'UNISSUED',
-    fiatPrice: 94 + Math.random() * 10,
-    issuedAt: i < issued ? new Date(Date.now() - Math.random() * 1000000000).toISOString() : undefined,
-  }));
+// Deterministic Unit Generator
+const generateDeterministicUnits = (dropId: string, issuedCount: number, baseFiat: number, isArchived: boolean = false): UnitRecord[] => {
+  return Array.from({ length: 21 }, (_, i) => {
+    const serialNum = i + 1;
+    const serialStr = String(serialNum).padStart(2, '0'); // "01"
+    const isIssued = i < issuedCount;
+
+    // Deterministic pseudo-randomness for fiat fluctuation
+    const fiatVariance = Math.sin(i * 123.45) * 5;
+
+    return {
+      unitId: `${dropId}-${serialStr}`,
+      serial: serialStr,
+      status: isIssued ? (isArchived ? 'ARCHIVED' : 'ISSUED') : 'UNISSUED',
+      method: i % 3 === 0 ? 'FIAT_BRIDGE' : 'BTC', // Deterministic method mix
+      fiatRef: isIssued ? Number((baseFiat + fiatVariance).toFixed(2)) : null,
+      issuedAt: isIssued ? new Date(1704067200000 + (i * 86400000)).toISOString() : undefined // Fixed timestamps from Jan 1 2024
+    };
+  });
 };
 
-export const INITIAL_PRODUCTS: Product[] = [
+export const INITIAL_DROPS: DropRecord[] = [
   {
-    id: 'p1',
-    refId: 'BRC-840001',
-    nomenclature: 'ARCHIVAL_VESSEL_01',
-    description: 'A matte-black obsidian-glass container designed for cold-storage seed phrase preservation. Forensic-grade engraving on high-density ceramic core.',
-    imageUrl: 'https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?q=80&w=1000&auto=format&fit=crop',
-    units: generateUnits(21, 14),
-    status: 'LIVE',
-    method: 'BLOCK_CORE',
+    dropId: '.0001',
+    dropName: 'GENESIS_DROP',
+    nomenclature: 'SCARCITY_TEE',
+    description: 'Heavyweight 400GSM cotton. Cold-storage archival quality finish.',
+    imageUrl: '/assets/scarcity-tee.jpg',
+    btcPrice: 0.001,
+    hardLimit: 21,
+    status: 'SOLD_OUT',
+    units: generateDeterministicUnits('.0001', 21, 95.00, true).map(u => ({ ...u, status: 'ISSUED' })) // All issued
   },
   {
-    id: 'p2',
-    refId: 'BRC-840002',
-    nomenclature: 'CHRONOS_SIGIL_V2',
-    description: 'Titanium-alloy block timepiece synced to the bitcoin block height. No mechanical hands, only the immutable ledger flow.',
-    imageUrl: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=1000&auto=format&fit=crop',
-    units: generateUnits(21, 21),
-    status: 'ARCHIVED',
-    method: 'BLOCK_CORE',
+    dropId: '.0002',
+    dropName: 'OBSIDIAN_CONTAINER',
+    nomenclature: 'OBSIDIAN_OBJECT',
+    description: 'A sealed archival object. Issued once. Verified forever.',
+    imageUrl: '/assets/obsidian-container.jpg',
+    btcPrice: 0.001,
+    hardLimit: 21,
+    status: 'LIVE',
+    units: generateDeterministicUnits('.0002', 11, 142.50) // 11 Issued
   },
   {
-    id: 'p3',
-    refId: 'BRC-840003',
-    nomenclature: 'ORACLE_LENS',
-    description: 'Proprietary optics filtered to only reveal data when viewed under specific block-height verified illumination patterns.',
-    imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop',
-    units: generateUnits(21, 3),
+    dropId: '.0003',
+    dropName: 'ARCHIVE_KEY',
+    nomenclature: 'ACCESS_KEY_V1',
+    description: 'Physical key for digital entry. Stainless steel construction.',
+    imageUrl: '/assets/archive-key.jpg',
+    btcPrice: 0.001,
+    hardLimit: 21,
     status: 'LIVE',
-    method: 'LN_V2',
+    units: generateDeterministicUnits('.0003', 5, 210.00) // 5 Issued
+  },
+  {
+    dropId: '.0004',
+    dropName: 'GENESIS_BLOCK',
+    nomenclature: 'BLOCK_REPRESENTATION',
+    description: 'Commemorative block representation. Solid styling.',
+    imageUrl: '/assets/genesis-block.jpg',
+    btcPrice: 0.001,
+    hardLimit: 21,
+    status: 'LIVE',
+    units: generateDeterministicUnits('.0004', 18, 350.00) // 18 Issued
   }
 ];

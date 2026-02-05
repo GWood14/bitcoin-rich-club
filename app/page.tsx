@@ -3,30 +3,31 @@
 
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import { TruthWatermark } from "@/components/SystemOverlays";
 
 export default function HomePage() {
   return (
-    <section className="flex flex-col items-center justify-center px-4 sm:px-12 h-[calc(100vh-160px)] animate-in fade-in duration-1000 relative">
+    <section className="flex flex-col items-center justify-start min-h-screen pt-20 pb-20 px-4 sm:px-12 animate-in fade-in duration-1000 relative">
       {/* Element #2 — TRUTH WATERMARK */}
 
-      <div className="relative z-10 w-full max-w-6xl aspect-[21/9] border border-white/10 flex flex-col items-center justify-center overflow-hidden">
+      <div className="relative z-10 w-full max-w-6xl aspect-[21/9] border border-white/10 flex flex-col items-center justify-center overflow-hidden mb-24 sm:mb-32">
         <div className="absolute top-2 left-4 font-mono text-[8px] opacity-40">LAT: 51.5074</div>
         <div className="absolute bottom-2 right-4 font-mono text-[8px] opacity-40">LNG: -0.1278</div>
         <div className="absolute top-0 bottom-0 left-1/2 w-[1px] bg-white/5"></div>
         <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-white/5"></div>
 
-        <div className="z-10 text-center flex flex-col items-center gap-10">
+        <div className="z-10 text-center flex flex-col items-center gap-6 sm:gap-10 p-4">
           {/* Element #1 — TOP PILL */}
           <div className="flex justify-center mb-0">
-            <div className="px-8 py-3 border border-brc-green/30 text-brc-green font-mono text-[10px] tracking-[0.4em] uppercase bg-black/30 backdrop-blur-sm transition-colors duration-300 hover:border-brc-green/60">
+            <div className="px-6 sm:px-8 py-3 border border-brc-green/30 text-brc-green font-mono text-[8px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.4em] uppercase bg-black/30 backdrop-blur-sm transition-colors duration-300 hover:border-brc-green/60 text-center">
               ENTER THE VAULT — BELIEVE IN THE FUTURE
             </div>
           </div>
 
-          <h1 className="font-display text-6xl sm:text-9xl tracking-tight leading-none italic">
+          <h1 className="font-display text-5xl sm:text-9xl tracking-tight leading-none italic text-center">
             Tangible Truth
           </h1>
-          <p className="font-sans text-white/60 text-sm sm:text-base max-w-lg leading-relaxed -mt-6 mb-2">
+          <p className="font-sans text-white/60 text-sm sm:text-base max-w-lg leading-relaxed -mt-2 sm:-mt-6 mb-2 text-center">
             A forensic record of value. Native Bitcoin issuance at 0.001 BTC. Limited to 21 units per archive entry.
           </p>
 
@@ -48,14 +49,14 @@ export default function HomePage() {
       </div>
 
       {/* Element #3 — Left Vertical Sidebar Text */}
-      <div className="fixed left-6 top-1/2 -translate-y-1/2 hidden lg:block z-20">
+      <div className="fixed left-6 top-1/2 -translate-y-1/2 hidden lg:block z-20 pointer-events-none">
         <div className="rotate-[-90deg] origin-left font-mono text-[10px] tracking-[0.6em] uppercase text-white/40">
           ESTABLISHED // BLOCK_840000
         </div>
       </div>
 
       {/* Value Columns */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-16 w-full max-w-6xl mt-24">
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-16 w-full max-w-6xl pb-20">
         {[
           { id: '01', title: 'Tangible Truth', desc: 'The physical manifestation of cryptographic certainty. Objects that bridge the gap between the ephemeral and the eternal.' },
           { id: '02', title: 'Absolute Scarcity', desc: 'Strictly limited to 21 units per archival reference. No re-issuance. No inflationary decay. Hard-capped by law.' },
@@ -71,3 +72,4 @@ export default function HomePage() {
     </section>
   );
 }
+

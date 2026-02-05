@@ -1,27 +1,32 @@
+// Drop Registry Data Model
 
 export type UnitStatus = 'UNISSUED' | 'ISSUED' | 'ARCHIVED';
+export type DropStatus = 'LIVE' | 'ARCHIVED' | 'SOLD_OUT';
+export type IssuanceMethod = 'BTC' | 'FIAT_BRIDGE';
 
-export interface Unit {
-  id: string;
-  serial: string;
+export interface UnitRecord {
+  unitId: string;            // e.g. ".0001-07"
+  serial: string;            // "01".."21"
   status: UnitStatus;
-  // Fixed: Allow both string (ISO) and number (timestamp) to maintain compatibility across different data sources
-  issuedAt?: string | number;
-  // Fixed: Made optional to match the definition in other type definitions in the project
-  fiatPrice?: number;
+  method: IssuanceMethod;
+  fiatRef: number | null;    // locked fiat reference at issuance
+  issuedAt?: string;         // ISO timestamp for issued units only
 }
 
-export interface Product {
-  id: string;
-  refId: string;
-  nomenclature: string;
+export interface DropRecord {
+  dropId: string;            // ".0001"
+  dropName: string;          // "GENESIS_DROP"
+  nomenclature: string;      // "SCARCITY_TEE"
   description: string;
-  imageUrl: string;
-  units: Unit[];
-  status: 'LIVE' | 'ARCHIVED';
-  method: 'BLOCK_CORE' | 'LN_V2';
+  imageUrl: string;          // hero image
+  thumbUrl?: string;         // optional filmstrip thumbnail
+  btcPrice: number;          // always 0.001
+  hardLimit: number;         // always 21
+  status: DropStatus;
+  units: UnitRecord[];
 }
 
+// Deprecated (kept for temporary compatibility if needed, but should be removed)
 export interface ArchiveStats {
   avgCp: number;
   totalUnits: number;
